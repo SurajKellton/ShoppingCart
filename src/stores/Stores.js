@@ -1,8 +1,6 @@
-import ProductListStore from "./ProductListStore";
-import CartStore from "./CartStore";
+import ProductListStore from "./GlobalStore";
 
 const Stores = {
-    ProductListStore,
-    CartStore,
-}
+  ProductListStore,
+};
 export default Stores;
