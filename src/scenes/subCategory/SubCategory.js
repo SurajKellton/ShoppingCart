@@ -16,6 +16,7 @@ import {
   renderItem,
   renderButtons,
 } from '../../utils/commonFunctions/CommonFunctions';
+import globalStyles from '../../utils/appConstants/Styles';
 
 @inject('ProductListStore')
 @observer
@@ -34,8 +35,9 @@ class SubCategory extends Component {
   }
 
   renderHeader = () => {
-    const {back} = Url.imageUrl;
+    const {back, cart, wishlist} = Url.imageUrl;
     const {CART, WISHLIST} = AppConstants;
+    const {Red} = globalStyles.colorCodes;
     const {ProductListStore, navigation} = this.props;
     {
       this.renderSubcategoryName();
@@ -45,6 +47,9 @@ class SubCategory extends Component {
         leftIcon={back}
         screenTitle={ProductListStore.subCategory}
         count={ProductListStore.count}
+        cart={cart}
+        wishlist={wishlist}
+        color={Red}
         wishlistCount={ProductListStore.wishlistCount}
         onHeaderLeftButtonPress={() => navigation.goBack()}
         onHeaderRightButtonPress={() => navigation.navigate(CART)}

@@ -7,6 +7,7 @@ export default {
   SUBCATEGORY: 'SubCategory',
   WISHLIST: 'Wishlist',
   ADDRESS: 'Address',
+  SAVEDADDRESS: 'SavedAddress',
 
   SCREENTITLE: {
     PRODUCTLIST: 'Product List',
@@ -43,6 +44,7 @@ export default {
     ADDRESS: 'Add Address',
     ADD_ADDRESS: 'Please add your address',
     ADDRESS_TYPE: 'Address Type',
+    SAVED_LOCATION: 'Saved Location',
   },
   BUTTONTITLE: {
     ADDED: 'Added',
@@ -50,7 +52,10 @@ export default {
     HOME: 'HOME',
     WORK: 'WORK',
     SAVE: 'SAVE',
-    CANCEL: 'CANCEL'
+    CANCEL: 'CANCEL',
+    SAVED_ADDRESS: 'Saved Address',
+    ADD_NEW: 'ADD NEW',
+    CONTINUE: 'CONTINUE',
   },
   PLACEHOLDERS: {
     NAME: 'Full name',
@@ -68,5 +73,23 @@ export default {
     MOBILE: 'Contact',
     CITY_TITLE: 'City',
     STATE_TITLE: 'State',
+  },
+  ALERT_MESSAGES: {
+    NAME: 'invalid name',
+    CONTACT: 'invalid contact',
+    PIN: 'invalid pin',
+    LOCALITY: 'invalid Locality',
+    ADDRESS: 'invalid Address',
+    CITY: 'invalid city name',
+    LANDMARK: 'invalid landmark',
+    STATE: 'Please select state',
+    SAVED: 'Form saved',
+    CANCEL: 'CANCEL',
+    OK: 'OK',
+  },
+  VALIDATION: {
+    VALIDATE_NAME: /[a-zA-Z][a-zA-Z ]{2,}/, 
+    VALIDATE_CONTACT: /^[0]?[789]\d{9}$/,
+    VALIDATE_PINCODE: /^[0-9]{6}$/,
   }
 };

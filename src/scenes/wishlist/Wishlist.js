@@ -14,13 +14,15 @@ import Url from '../../utils/appConstants/ImageUrl';
 import AppConstants from '../../utils/appConstants/AppConstants';
 import CustomHeader from '../../utils/component/CustomHeader';
 import { renderItem, renderButtons } from '../../utils/commonFunctions/CommonFunctions';
+import globalStyles from '../../utils/appConstants/Styles';
 
 @inject('ProductListStore')
 @observer
 class Wishlist extends Component {
   renderHeader = () => {
-    const {back} = Url.imageUrl;
+    const {back, wishlist, cart} = Url.imageUrl;
     const {CART} = AppConstants;
+    const {Red} = globalStyles.colorCodes;
     const {WISHLIST} = AppConstants.SCREENTITLE;
     const {ProductListStore, navigation} = this.props;
     return (
@@ -28,6 +30,9 @@ class Wishlist extends Component {
         leftIcon={back}
         screenTitle={WISHLIST}
         count={ProductListStore.count}
+        wishlist={wishlist}
+        cart={cart}
+        color={Red}
         wishlistCount={ProductListStore.wishlistCount}
         onHeaderLeftButtonPress={() => navigation.goBack()}
         onHeaderRightButtonPress={() => navigation.navigate(CART)}

@@ -6,6 +6,7 @@ import { DrawerContent } from "./CustomSideBar";
 import SubCategory from "../../scenes/subCategory/SubCategory";
 import Wishlist from "../../scenes/wishlist/Wishlist";
 import Adress from "../../scenes/cart/Adress";
+import SavedAdress from "../../scenes/cart/SavedAddress";
 
 const Drawer = createDrawerNavigator();
 
@@ -16,6 +17,7 @@ function SideBarStack() {
       <Drawer.Screen name={AppConstants.SUBCATEGORY} component={SubCategory} options={{ headerShown: false }} />
       <Drawer.Screen name={AppConstants.WISHLIST} component={Wishlist} options={{ headerShown: false }} />
       <Drawer.Screen name={AppConstants.ADDRESS} component={Adress} options={{ headerShown: false }} />
+      <Drawer.Screen name={AppConstants.SAVEDADDRESS} component={SavedAdress} options={{ headerShown: false }} />
     </Drawer.Navigator>
   );
 }

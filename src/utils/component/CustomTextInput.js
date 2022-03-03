@@ -88,7 +88,7 @@ class CustomTextInput extends Component {
         <TextInput
           //placeholder = {id==ProductListStore.idForTextField? '': placeholder}
           style={styles.textFields}
-          onChangeText={() => onChangeText()}
+          onChangeText={(text) => onChangeText(text)}
           onFocus={() => this.onFocus()}
           onBlur={() => this.onBlur()}
           multiline={true}

@@ -12,6 +12,9 @@ const Url = {
     wishlist: require('../../assets/images/heart.png'),
     addedToWishlist: require('../../assets/images/addedWishlist.png'),
     tick: require('../../assets/images/tick.png'),
+    okIcon: require('../../assets/images/ok.png'),
+    greeenTick: require('../../assets/images/greenTick.png'),
+    mobile: require('../../assets/images/mobile.png')
   },
   pant: {
     Pant1:

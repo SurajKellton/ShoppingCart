@@ -23,13 +23,17 @@ import {
 @observer
 class Cart extends Component {
   renderHeader = () => {
-    const {back} = Url.imageUrl;
+    const {back, cart, wishlist} = Url.imageUrl;
+    const {Red} = globalStyles.colorCodes;
     const {CART, WISHLIST} = AppConstants.SCREENTITLE;
     const {ProductListStore, navigation} = this.props;
     return (
       <CustomHeader
         leftIcon={back}
         screenTitle={CART}
+        cart={cart}
+        wishlist={wishlist}
+        color={Red}
         count={ProductListStore.count}
         wishlistCount={ProductListStore.wishlistCount}
         onHeaderLeftButtonPress={() => navigation.goBack()}
@@ -155,14 +159,14 @@ class Cart extends Component {
 
   renderBottom = () => {
     const {ButtonBackgroundColor, white} = globalStyles.colorCodes;
-    const {ADDRESS} = AppConstants;
-    const ADD_ADDRESS =AppConstants.CONSTANTHEADINGS.ADDRESS;
+    const {SAVEDADDRESS} = AppConstants;
+    const {SAVED_ADDRESS} = AppConstants.BUTTONTITLE;
     return (
       <View style={styles.bottomView}>
         <TouchableOpacity
           style={styles.addressBtn(ButtonBackgroundColor)}
-          onPress={() => this.props.navigation.navigate(ADDRESS)}>
-          <Text style={styles.bottomButtonText(white)}>{ADD_ADDRESS}</Text>
+          onPress={() => this.props.navigation.navigate(SAVEDADDRESS)}>
+          <Text style={styles.bottomButtonText(white)}>{SAVED_ADDRESS}</Text>
         </TouchableOpacity>
       </View>
     );

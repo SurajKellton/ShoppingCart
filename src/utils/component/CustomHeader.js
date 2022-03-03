@@ -9,7 +9,7 @@ const CustomHeader = props => {
   const countBubbleForCart = () => {
     if (props.count !== 0) {
       return (
-        <View style={styles.cartCountView(Red)}>
+        <View style={styles.cartCountView(props.color)}>
           <Text style={styles.cartCountText(white)}>{props.count}</Text>
         </View>
       );
@@ -18,7 +18,7 @@ const CustomHeader = props => {
   const countBubbleForWishlist = () => {
     if (props.wishlistCount !== 0) {
       return (
-        <View style={styles.cartCountView(Red)}>
+        <View style={styles.cartCountView(props.color)}>
           <Text style={styles.cartCountText(white)}>{props.wishlistCount}</Text>
         </View>
       );
@@ -41,7 +41,7 @@ const CustomHeader = props => {
             onPress={() => {
               props.onWishlistButtonPress();
             }}>
-            <Image style={styles.wishlistIcon} source={wishlist} />
+            <Image style={styles.wishlistIcon} source={props.wishlist} />
             {countBubbleForWishlist()}
           </TouchableOpacity>
         </View>
@@ -49,7 +49,7 @@ const CustomHeader = props => {
           onPress={() => {
             props.onHeaderRightButtonPress();
           }}>
-          <Image style={styles.rightIcon} source={cart} />
+          <Image style={styles.rightIcon} source={props.cart} />
           {countBubbleForCart()}
         </TouchableOpacity>
       </View>
@@ -62,10 +62,10 @@ const styles = StyleSheet.create({
   header: gray => ({
     height: 44,
     flexDirection: 'row',
-    borderBottomWidth: 1,
-    borderBottomColor: gray,
+    //borderBottomWidth: 1,
+    //borderBottomColor: gray,
     padding: 8,
-    borderBottomWidth: 3,
+    //borderBottomWidth: 3,
     justifyContent: 'center',
     alignItems: 'center',
   }),

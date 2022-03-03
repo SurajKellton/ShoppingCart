@@ -87,6 +87,61 @@ class ProductListStore {
   constructor() {
     makeObservable(this);
   }
+
+  @observable adress = this.address;
+
+  address = [
+    {
+      id: 1,
+      userName: 'Mr. Hariom Rajput',
+      address:
+        'House No. 231 2nd Floor, Sector 23, Near by Water Tank and Temple,Gurgaon. Haryana, 122017',
+      mobile: '+91 6597523541',
+    },
+    {
+      id: 2,
+      userName: 'Mr. Harish Sharma',
+      address:
+        'House No. 254 3rd Floor, Sector 58, Near by Water Tank and Temple,Gurgaon. Haryana, 122017',
+      mobile: '+91 5235657410',
+    },
+    {
+      id: 3,
+      userName: 'Mr. Kailash',
+      address:
+        'House No. 274 2nd Floor, Sector 45, Near by Water Tank and Temple,Gurgaon. Haryana, 122017',
+      mobile: '+91 5645789520',
+    },
+    {
+      id: 4,
+      userName: 'Mr. Bhupesh Pandey',
+      address:
+        'House No. 231 2nd Floor, Sector 23, Near by Water Tank and Temple,Gurgaon. Haryana, 122017',
+      mobile: '+91 6597523541',
+    },
+    {
+      id: 5,
+      userName: 'Mrs Shilpa Sharma',
+      address:
+        'House No. 254 3rd Floor, Sector 58, Near by Water Tank and Temple,Gurgaon. Haryana, 122017',
+      mobile: '+91 5235657410',
+    },
+  ];
+
+  stateList = [
+    'Select State',
+    'Uttarakhand',
+    'Delhi',
+    'Goa',
+    'J&K',
+    'Hariyana',
+    'Himanchal',
+    'Punjab',
+    'Rajasthan',
+    'Maharashtra',
+    'Odisha',
+  ];
+
   productList = [
     {
       id: 1,

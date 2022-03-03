@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Alert
+  Alert,
 } from 'react-native';
 import {action, makeObservable, observable} from 'mobx';
 import {observer, inject} from 'mobx-react';
@@ -45,13 +45,11 @@ class Adress extends Component {
     const {back} = Url.imageUrl;
     const {CART} = AppConstants;
     const {ADDRESS} = AppConstants.SCREENTITLE;
-    const {ProductListStore, navigation} = this.props;
+    const {navigation} = this.props;
     return (
       <CustomHeader
         leftIcon={back}
         screenTitle={ADDRESS}
-        count={ProductListStore.count}
-        wishlistCount={ProductListStore.wishlistCount}
         onHeaderLeftButtonPress={() => navigation.goBack()}
         onHeaderRightButtonPress={() => navigation.navigate(CART)}
         onWishlistButtonPress={() => navigation.navigate(WISHLIST)}
@@ -59,23 +57,8 @@ class Adress extends Component {
     );
   };
 
-  // onPressSave = () => {
-  //   const {ProductListStore} = this.props;
-  //   const {REMOVE_ALERT_FOR_WISHLIST} = AppConstants.CONSTANTMSG;
-  //   if (ProductListStore.nameTF.length == 0){
-  //   Alert.alert('', 'Please Enter Name', [
-  //     {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
-  //     {text: 'Ok', onPress: () => console.log('ok Pressed')},
-  //   ]);}else{
-  //     Alert.alert('', 'Form Saved', [
-  //       {text: 'Cancel', onPress: () => console.log('Cancel Pressed')},
-  //       {text: 'Ok', onPress: () => console.log('ok Pressed')},
-  //     ]);
-  //   }
-  // };
-
   renderBottom = () => {
-    const {ligt_gray, TextColor, orange, Cancel_Btn, Light_Green} =
+    const {TextColor, orange, Cancel_Btn, Light_Green} =
       globalStyles.colorCodes;
     const {HOME, WORK, SAVE, CANCEL} = AppConstants.BUTTONTITLE;
     const {tick} = Url.imageUrl;
@@ -115,8 +98,9 @@ class Adress extends Component {
             <Text style={styles.bottomButtonText(TextColor)}> {WORK} </Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity style={styles.bottomBtn(orange)}>
-        {/* onPress={() => this.onPressSave()}> */}
+        <TouchableOpacity
+          style={styles.bottomBtn(orange)}
+          onPress={() => this.onPressSave()}>
           <Text style={styles.bottomButtonText(TextColor)}>{SAVE}</Text>
         </TouchableOpacity>
         <TouchableOpacity style={styles.bottomBtn(Cancel_Btn)}>
@@ -127,14 +111,7 @@ class Adress extends Component {
   };
 
   renderDropdown = () => {
-    let list = [
-      'Select State',
-      'Uttarakhand',
-      'Delhi',
-      'Goa',
-      'J&K',
-      'Hariyana',
-    ];
+    const {ProductListStore} = this.props;
     return (
       <View style={styles.dropDownView}>
         <Picker
@@ -142,7 +119,7 @@ class Adress extends Component {
           mode="dropdown"
           selectedValue={this.dropDownItem}
           onValueChange={itemValue => this.updateValue(itemValue)}>
-          {list.map((item, index) => {
+          {ProductListStore.stateList.map((item, index) => {
             return <Picker.Item label={item} value={index} key={index} />;
           })}
         </Picker>
@@ -155,6 +132,67 @@ class Adress extends Component {
     ProductListStore.updatingTextFieldText(text);
     {
       updateTextFieldObservable;
+    }
+  };
+
+  alert = msg => {
+    const {CANCEL, OK} = AppConstants.ALERT_MESSAGES;
+    Alert.alert('', msg, [
+      {text: CANCEL, onPress: () => console.log('Cancel Pressed')},
+      {text: OK, onPress: () => console.log('ok Pressed')},
+    ]);
+  };
+
+  nameValidation = () => {
+    const {VALIDATE_NAME} = AppConstants.VALIDATION;
+    return VALIDATE_NAME.test(this.props.ProductListStore.nameTF);
+  };
+
+  contactValidation = () => {
+    const {VALIDATE_CONTACT} = AppConstants.VALIDATION;
+    return VALIDATE_CONTACT.test(this.props.ProductListStore.contactTF);
+  };
+
+  pincodeValidation = () => {
+    const {VALIDATE_PINCODE} = AppConstants.VALIDATION;
+    return VALIDATE_PINCODE.test(this.props.ProductListStore.pincodeTF);
+  };
+
+  stateValidation = () => {
+    return this.dropDownItem == '' || this.dropDownItem == 0 ? false : true;
+  };
+
+  onPressSave = () => {
+    const {ProductListStore} = this.props;
+    const {
+      NAME,
+      CONTACT,
+      PIN,
+      LOCALITY,
+      ADDRESS,
+      CITY,
+      STATE,
+      LANDMARK,
+      SAVED,
+    } = AppConstants.ALERT_MESSAGES;
+    if (!this.nameValidation()) {
+      this.alert(NAME);
+    } else if (!this.contactValidation()) {
+      this.alert(CONTACT);
+    } else if (!this.pincodeValidation()) {
+      this.alert(PIN);
+    } else if (ProductListStore.localityTF.length < 1) {
+      this.alert(LOCALITY);
+    } else if (ProductListStore.addressTF.length < 1) {
+      this.alert(ADDRESS);
+    } else if (ProductListStore.cityTF.length < 1) {
+      this.alert(CITY);
+    } else if (!this.stateValidation()) {
+      this.alert(STATE);
+    } else if (ProductListStore.landmarkTF.length < 1) {
+      this.alert(LANDMARK);
+    } else {
+      this.alert(SAVED);
     }
   };
 
@@ -178,11 +216,8 @@ class Adress extends Component {
         <CustomTextInput
           placeholder={NAME}
           //id = {1}
-          onChangeText={() =>
-            this.onChangeText(
-              NAME,
-              ProductListStore.updatingName(ProductListStore.textFieldText),
-            )
+          onChangeText={text =>
+            this.onChangeText(NAME, ProductListStore.updatingName(text))
           }
           // onFocus = {() => ProductListStore.updatingidTF(1)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
@@ -190,11 +225,8 @@ class Adress extends Component {
         <CustomTextInput
           placeholder={CONTACT}
           //id = {2}
-          onChangeText={() =>
-            this.onChangeText(
-              CONTACT,
-              ProductListStore.updatingContact(ProductListStore.textFieldText),
-            )
+          onChangeText={text =>
+            this.onChangeText(CONTACT, ProductListStore.updatingContact(text))
           }
           // onFocus = {() => ProductListStore.updatingidTF(2)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
@@ -202,11 +234,8 @@ class Adress extends Component {
         <CustomTextInput
           placeholder={PINCODE}
           //id = {3}
-          onChangeText={() =>
-            this.onChangeText(
-              PINCODE,
-              ProductListStore.updatingPin(ProductListStore.textFieldText),
-            )
+          onChangeText={text =>
+            this.onChangeText(PINCODE, ProductListStore.updatingPin(text))
           }
           // onFocus = {() => ProductListStore.updatingidTF(3)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
@@ -214,18 +243,27 @@ class Adress extends Component {
         <CustomTextInput
           placeholder={LOCALITY}
           //id = {4}
+          onChangeText={text =>
+            this.onChangeText(PINCODE, ProductListStore.updatingLocality(text))
+          }
           // onFocus = {() => ProductListStore.updatingidTF(4)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
         ></CustomTextInput>
         <CustomTextInput
           placeholder={ADDRESS_PLACEHOLDER}
           //id = {5}
+          onChangeText={text =>
+            this.onChangeText(PINCODE, ProductListStore.updatingAddress(text))
+          }
           // onFocus = {() => ProductListStore.updatingidTF(5)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
         ></CustomTextInput>
         <CustomTextInput
           placeholder={CITY}
           //id = {6}
+          onChangeText={text =>
+            this.onChangeText(PINCODE, ProductListStore.updatingCity(text))
+          }
           // onFocus = {() => ProductListStore.updatingidTF(6)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
         ></CustomTextInput>
@@ -233,12 +271,21 @@ class Adress extends Component {
         <CustomTextInput
           placeholder={LANDMARK}
           //id = {7}
+          onChangeText={text =>
+            this.onChangeText(PINCODE, ProductListStore.updatingLandmark(text))
+          }
           // onFocus = {() => ProductListStore.updatingidTF(7)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
         ></CustomTextInput>
         <CustomTextInput
           placeholder={ALTERNATIVE}
           //id = {8}
+          onChangeText={text =>
+            this.onChangeText(
+              PINCODE,
+              ProductListStore.updatingAlternativePhone(text),
+            )
+          }
           keyboardType="numeric"
           // onFocus = {() => ProductListStore.updatingidTF(8)}
           // onBlur = {() => ProductListStore.updatingidTF(0)}
@@ -335,7 +382,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   textFields: {
-     fontSize: 15,
+    fontSize: 15,
   },
   dropDownView: {
     paddingLeft: 9,
